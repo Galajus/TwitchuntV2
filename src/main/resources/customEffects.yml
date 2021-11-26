@@ -1,0 +1,43 @@
+#Name of effect CAN'T collide with plugin effect's names - ID must be integer (custom effect's has 999 id prefix)
+#lore max 25 chars
+#space for player (hunted): %player%
+#space for world name of hunted location: %world%
+#space for x-coord of hunted location: %x-coord%
+#space for y-coord of hunted location: %y-coord%
+#space for z-coord of hunted location: %z-coord%
+#delay in ticks (1 second = 20 ticks - must be positive number!)
+#please not use delayed command without delay or delay < 20 (secure system not ready yet)
+#delayed command not execute if delay is not set or is 0
+
+#LORE MUST BE UNIQUE
+
+effects:
+  CustomEffect1:
+    id: 1
+    lore: "CustomCommand fallDamage"
+    command: "gamerule fallDamage false"
+    enabled: false
+  CustomEffect2:
+    id: 2
+    lore: "CustomTestCommand2"
+    command: "cmi money set %player% 1000"
+    enabled: false
+  CustomEffect3:
+    id: 3
+    lore: "CustomTestCommand3"
+    command: "cmi launch %player% -nodamage"
+    enabled: false
+  CustomEffect4:
+    id: 4
+    lore: "CustomTestCommand4"
+    command: "cmi toast %player% -t:challenge -icon:stone"
+    enabled: false
+  CustomEffect5:
+    id: 5
+    lore: "Custom - peacefull 60s"
+    command: "difficulty peaceful"
+    command2: "gamerule fallDamage false"
+    delay: 1200
+    commandDelay: "difficulty normal"
+    commandDelay2: "gamerule fallDamage true"
+    enabled: false

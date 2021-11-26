@@ -1,0 +1,4 @@
+#IN BETA, USE WITH CAUTION
+Enabled: false
+StreamElementsAccount: "accountId"
+JWT: "ChannelJWT"

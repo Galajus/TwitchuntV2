@@ -1,0 +1,144 @@
+#DO NOT CHANGE id and LORE MUST BE UNIQUE
+#Edit only lore and enabled max 25 chars per lore
+
+effects:
+  creepers:
+    id: 1
+    lore: "Spawn some creepers"
+    enabled: true
+  randomTeleport:
+    id: 2
+    lore: "Teleport to random place"
+    enabled: true
+  teleportUp:
+    id: 3
+    lore: "Teleport 3 blocks up"
+    enabled: true
+  teleportUpv2:
+    id: 4
+    lore: "Teleport 6 blocks up"
+    enabled: true
+  Blindness:
+    id: 5
+    lore: "Blindness for 10 s."
+    enabled: true
+  Blindnessv2:
+    id: 6
+    lore: "Blindness for 20 s."
+    enabled: true
+  Night:
+    id: 7
+    lore: "Make a night"
+    enabled: true
+  Levitation:
+    id: 8
+    lore: "Levitation for 10 s."
+    enabled: true
+  Levitationv2:
+    id: 9
+    lore: "Levitation for 20 s."
+    enabled: true
+  ClearInventory:
+    id: 10
+    lore: "Clear inventory"
+    enabled: true
+  OneHealth:
+    id: 11
+    lore: "1 HP and 0 Food"
+    enabled: true
+  Poison:
+    id: 12
+    lore: "Poisoning for 60 s."
+    enabled: true
+  FloorIsLava:
+    id: 13
+    lore: "Block at hunted to lava"
+    enabled: true
+  Bread:
+    id: 14
+    lore: "Give 16 bread"
+    enabled: true
+  SandAttack:
+    id: 15
+    lore: "Fill inv with sand"
+    enabled: true
+  TNT:
+    id: 16
+    lore: "Spawn TNT at hunted"
+    enabled: true
+  LockInventory:
+    id: 17
+    lore: "Lock chests for 60 s."
+    enabled: true
+  Spectator:
+    id: 18
+    lore: "Spectator for 5 s."
+    enabled: true
+  Spectatorv2:
+    id: 19
+    lore: "Spectator for 10 s."
+    enabled: true
+  ZombieAttack:
+    id: 20
+    lore: "Spawn zombies"
+    enabled: true
+  Burn:
+    id: 21
+    lore: "Make hunted burning 8 s."
+    enabled: true
+  Slow:
+    id: 22
+    lore: "Slow for 60 seconds"
+    enabled: true
+  BlockInvClick:
+    id: 23
+    lore: "Block inv click for 30 s."
+    enabled: true
+  BlockPickup:
+    id: 24
+    lore: "Block pickup for 45 s."
+    enabled: true
+  BreakDamage:
+    id: 25
+    lore: "Dmg on Break for 30 s."
+    enabled: true
+  Nausea:
+    id: 26
+    lore: "Nausea for 30 s."
+    enabled: true
+  Regeneration:
+    id: 27
+    lore: "Regen. lvl 3 for 15 s."
+    enabled: true
+  Nightvision:
+    id: 28
+    lore: "Nightvision for 60 s."
+    enabled: true
+  NearesVillage:
+    id: 29
+    lore: "Coords of nearest village"
+    enabled: true
+  HealAndFeed:
+    id: 30
+    lore: "Heal and feed"
+    enabled: true
+  DoubleMobDrop:
+    id: 31
+    lore: "2x drop from mobs for 45s"
+    enabled: true
+  MorningAndSun:
+    id: 32
+    lore: "Morning and sunny weather"
+    enabled: true
+  NoDamageOnAttack:
+    id: 33
+    lore: "No dmg on attack for 30s."
+    enabled: true
+  RemoveRandomItem:
+    id: 34
+    lore: "Remove random item"
+    enabled: true
+  WitherPoison:
+    id: 35
+    lore: "Wither lvl 2 for 20s."
+    enabled: true

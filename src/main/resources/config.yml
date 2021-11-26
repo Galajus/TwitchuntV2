@@ -1,0 +1,94 @@
+#--------------------TwitchBot settings----------------------
+#Comments in this config is visible only on first load, for help look Config-help.txt
+#Screenshots: https://docs.google.com/document/d/1H8tQfZ2BU-bqaPurFX_GU6u8AWAgT3g9HqkScjfgbfM/edit?usp=sharing
+#YOU MUST CAN USE POLLS ON YOUR TWITCH CHANNEL< WITHOUT IT PLUGIN DOESN'T WORK!
+#Permissions:
+#twitchunt.commands - use commands (default op)
+#---------------CHANGE ONLY ON RESTART SERVER----------------
+#Name of channel what you want to send messages on twitch
+channelName: "Nameofchannel"
+startMessage: "Twitchunt bot by Galajus ready to play!"
+#Chat token to access, connect your created account for bot or your's channel, then messages will be sended by you
+#Redem token: https://twitchtokengenerator.com/
+#On this side select: Custom Scope Token (popup on enter)
+#In "Available Token Scopes" - "Helix" set on YES: chat:read, chat:edit, channel:manage:polls, channel:read:polls
+#and below click "Generate Token"
+#Then copy ACCESS TOKEN and paste there
+chatToken: "TOKEN"
+
+#Plugin need bot account, create Application and paste data
+#URL: https://dev.twitch.tv/console
+#On this page register and in console click "register your application"
+#Name can by anything, Redirect URL set to: "http://localhost"
+#Category: "Chat Bot"
+#After create inside "Manage Application: [name] copy: ClientID and Client secret, you can generate new if you don't see
+clientID: "ID"
+clientSecret: "SECRET"
+
+forceSpigotUsage: false #helpfull with older versions of paper or whole server (lower than 1.17)
+
+#-------CHANGE WHENEVER YOU WANT /TWITCHUNT RELOAD-----------
+
+#Exclude chat messages from users
+excludeSenders:
+  - "bot1"
+  - "bot2"
+#Size of letters are important!
+huntedPlayers:
+  - "Someone"
+  - "SomeoneTwo"
+optionsPerPoll: 3 #Must be between 2 and 5
+pollInstaStart: true #Start poll after run /twitchunt start or wait pollInterval and then start poll
+pollDuration: 25
+pollTitle: "Twitchunt effect poll!"
+pollInterval: 60
+#configure stream messages in minecraft:
+twitchMessagesEnabled: true
+
+#ALL BELLOW IS IN BETA
+#BITS, SUBS AND FOLLOWS EFFECTS IS CASTING RANDOMLY FROM THE GIVEN ID'S
+
+#BITS CONFIG:
+BitsEnabled: true
+#First starting from 0, pattern : (a, b>
+BitsThresholds:
+  FirstLevel: 10
+  SecondLevel: 50
+  ThirdLevel: 150
+
+#type id's of effects, custom have prefix "999", for example 9997
+BitsEffects:
+  LevelOne:
+    - 1
+    - 2
+    - 3
+  LevelTwo:
+    - 11
+    - 12
+    - 13
+  LevelThree:
+    - 22
+    - 23
+    - 24
+
+#SUBS CONFIG:
+SubsEnabled: true
+#type id's of effects, custom have prefix "999", for example 9998
+SubsEffects:
+  TierOne:
+    - 1
+    - 2
+    - 3
+    - 12
+    - 5
+  TierTwo:
+    - 4
+    - 12
+    - 14
+    - 16
+  TierThree:
+    - 22
+    - 23
+    - 24
+
+#TIPS LOOK StreamElements.yml

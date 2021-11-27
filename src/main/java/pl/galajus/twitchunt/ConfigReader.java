@@ -5,7 +5,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import pl.galajus.twitchunt.Dependency.DependencyResolver;
 import pl.galajus.twitchunt.ObjectsManager.PluginPollChoice;
 
 import java.io.File;
@@ -16,15 +15,13 @@ import java.util.Map;
 public class ConfigReader {
 
     private final Twitchunt twitchunt;
-    private final DependencyResolver dependencyResolver;
 
     private FileConfiguration mainConfig;
     private FileConfiguration effectsConfig;
     private FileConfiguration customEffectsConfig;
 
-    public ConfigReader(Twitchunt twitchunt, DependencyResolver dependencyResolver) {
+    public ConfigReader(Twitchunt twitchunt) {
         this.twitchunt = twitchunt;
-        this.dependencyResolver = dependencyResolver;
 
         this.readConfigs();
     }
@@ -47,7 +44,8 @@ public class ConfigReader {
         try {
             mainConfig.load(fDefault);
         } catch (Exception ex) {
-            dependencyResolver.errorLogToConsole("configLoadError");
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().errorLogToConsole("configLoadError"),1);
+
         }
         twitchunt.saveDefaultConfig();
 
@@ -168,9 +166,16 @@ public class ConfigReader {
         List<String> huntedPlayers = getHuntedPlayersAsStrings();
         if (!this.getHuntedPlayersAsStrings().contains(hunted)) {
             huntedPlayers.add(hunted);
-            mainConfig.set("huntedPlayers", getHuntedPlayersAsStrings().add(hunted));
+            mainConfig.set("huntedPlayers", huntedPlayers);
             mainConfig.options().header("Config instructions in file: Config-help.txt");
             twitchunt.saveConfig();
+            twitchunt.getEffectController().getEffectCaster().updateHunters();
+
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+                if (twitchunt.getDependencyResolver().isPaper()) {
+                    twitchunt.getEffectController().getPaperEffectCaster().updateHunters();
+                }
+            },1);
             return true;
         }
         return false;
@@ -182,6 +187,13 @@ public class ConfigReader {
         mainConfig.set("huntedPlayers", huntedPlayers);
         mainConfig.options().header("Config instructions in file: Config-help.txt");
         twitchunt.saveConfig();
+        twitchunt.getEffectController().getEffectCaster().updateHunters();
+
+        Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+            if (twitchunt.getDependencyResolver().isPaper()) {
+                twitchunt.getEffectController().getPaperEffectCaster().updateHunters();
+            }
+        },1);
     }
 
     public void setPollDuration(long duration) {
@@ -216,16 +228,24 @@ public class ConfigReader {
 
     private void validateConfig() {
         if (this.getPollDuration() < 20) {
-            dependencyResolver.warningLogToConsole("configPollDurationInvalid");
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().warningLogToConsole("configPollDurationInvalid"),1);
             this.setPollDuration(30);
         }
 
         if (this.getPollInterval() < (this.getPollDuration() + 4)) {
-            dependencyResolver.warningLogToConsole("configPollIntervalInvalid");
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().warningLogToConsole("configPollIntervalInvalid"),1);
             this.setPollInterval(this.getPollDuration() + 10L);
         }
 
         this.loadPluginEffects();
+
+        Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+            twitchunt.getEffectController().getEffectCaster().updateHunters();
+            if (twitchunt.getDependencyResolver().isPaper()) {
+                twitchunt.getEffectController().getPaperEffectCaster().updateHunters();
+            }
+        }, 1);
+
     }
 
     private void loadPluginEffects() {
@@ -241,9 +261,12 @@ public class ConfigReader {
                         lore = "[empty lore]";
                     }
                     if (lore.length() > 25) {
-                        dependencyResolver.errorLogToConsole("tooLongLore1");
-                        dependencyResolver.errorLogToConsole("tooLongLore2");
-                        Bukkit.getPluginManager().disablePlugin(twitchunt);
+                        Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
+                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
+                            Bukkit.getPluginManager().disablePlugin(twitchunt);
+                        },1);
+
                         return;
                     }
                     new PluginPollChoice(id, lore);
@@ -270,9 +293,11 @@ public class ConfigReader {
                         lore = "[empty lore]";
                     }
                     if (lore.length() > 25) {
-                        dependencyResolver.errorLogToConsole("tooLongLore1");
-                        dependencyResolver.errorLogToConsole("tooLongLore2");
-                        Bukkit.getPluginManager().disablePlugin(twitchunt);
+                        Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
+                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
+                            Bukkit.getPluginManager().disablePlugin(twitchunt);
+                        },1);
                         return;
                     }
                     new PluginPollChoice(id, lore, command1, command2, delay, commandDelay1, commandDelay2);

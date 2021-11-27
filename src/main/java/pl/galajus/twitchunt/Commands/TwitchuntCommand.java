@@ -67,6 +67,7 @@ public class TwitchuntCommand implements CommandExecutor, Listener {
 
                 if (args[0].equalsIgnoreCase("reload")) {
                     twitchunt.getManager().reloadConfigOptions();
+                    twitchunt.getTranslations().initialize();
                     dependencyResolver.sendTranslatedMessage(sender,"configReloaded");
                     return true;
                 }
@@ -75,28 +76,25 @@ public class TwitchuntCommand implements CommandExecutor, Listener {
                         dependencyResolver.sendTranslatedMessage(sender,"stopCooldown");
                         return true;
                     }
-                    //TODO:
-//                    if (startEffectPolls()) {
-//                        dependencyResolver.sendTranslatedMessage(sender,"pollsStarted");
-//                    } else {
-//                        dependencyResolver.sendTranslatedMessage(sender,"pollsAlreadyStarted");
-//                    }
+
+                    if (twitchunt.getPollCreator().enablePolls()) {
+                        dependencyResolver.sendTranslatedMessage(sender,"pollsStarted");
+                    } else {
+                        dependencyResolver.sendTranslatedMessage(sender,"pollsAlreadyStarted");
+                    }
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("stop")) {
 
-                    //TODO:
-//                    if (stopEffectPolls()) {
-//                        dependencyResolver.sendTranslatedMessage(sender,"pollsDisabled");
-//                        Bukkit.getScheduler().cancelTask(TimeChoices.getTaskIDPoll());
-//                        Bukkit.getScheduler().cancelTask(TimeChoices.getTaskIDInterval());
-//                        cooldown = true;
-//                        Bukkit.getScheduler().runTaskLater(twitchunt,
-//                                () -> cooldown = false,
-//                                (configReader.getPollInterval() + 5L) * 20);
-//                    } else {
-//                        dependencyResolver.sendTranslatedMessage(sender,"pollsNotEnabled");
-//                    }
+                    if (twitchunt.getPollCreator().disablePolls()) {
+                        dependencyResolver.sendTranslatedMessage(sender,"pollsDisabled");
+                        cooldown = true;
+                        Bukkit.getScheduler().runTaskLater(twitchunt,
+                                () -> cooldown = false,
+                                (configReader.getPollInterval() + 5L) * 20);
+                    } else {
+                        dependencyResolver.sendTranslatedMessage(sender,"pollsNotEnabled");
+                    }
                     return true;
                 }
 

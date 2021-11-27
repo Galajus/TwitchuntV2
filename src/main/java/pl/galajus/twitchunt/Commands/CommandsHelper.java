@@ -24,7 +24,7 @@ public class CommandsHelper {
                 "reload",
                 "pollsinstastart");
 
-        commandTwitchuntChoiceArgsList = List.of("true, false");
+        commandTwitchuntChoiceArgsList = List.of("true", "false");
     }
 
     public List<String> getCommandTwitchuntArgsList() {

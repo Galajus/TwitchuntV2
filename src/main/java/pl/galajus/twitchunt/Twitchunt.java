@@ -1,11 +1,15 @@
 package pl.galajus.twitchunt;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.galajus.twitchunt.Commands.CommandsHelper;
 import pl.galajus.twitchunt.Commands.TwitchuntCommand;
 import pl.galajus.twitchunt.Dependency.DependencyResolver;
+import pl.galajus.twitchunt.Minecraft.EffectController;
+import pl.galajus.twitchunt.Minecraft.EventsController;
 import pl.galajus.twitchunt.ObjectsManager.Manager;
 import pl.galajus.twitchunt.TwitchBot.Bot;
+import pl.galajus.twitchunt.TwitchBot.PollCreator;
 
 import java.util.Objects;
 
@@ -22,6 +26,11 @@ public final class Twitchunt extends JavaPlugin {
     private CommandsHelper commandsHelper;
     private DependencyResolver dependencyResolver;
     private ConfigReader configReader;
+    private PollCreator pollCreator;
+    private EventsController eventsController;
+    private EffectController effectController;
+
+    private TwitchuntCommand twitchuntCommand;
 
     @Override
     public void onEnable() {
@@ -33,18 +42,31 @@ public final class Twitchunt extends JavaPlugin {
 
         manager = new Manager(this);
 
-        //TODO: Paper check + dependencies + registering events
+        //Reading configs
+        configReader = new ConfigReader(this);
+
+        //Paper check + dependencies
         dependencyResolver = new DependencyResolver(this, translations);
 
-        //TODO: Reading configs
-        configReader = new ConfigReader(this, dependencyResolver);
-
-        //Registering Commands
+        //Registering Commands/Events
         commandsHelper = new CommandsHelper();
-        Objects.requireNonNull(getCommand("twitchunt")).setExecutor(new TwitchuntCommand(this, commandsHelper, dependencyResolver, configReader));
+
+        twitchuntCommand = new TwitchuntCommand(this, commandsHelper, dependencyResolver, configReader);
+        Objects.requireNonNull(getCommand("twitchunt")).setExecutor(twitchuntCommand);
+        Bukkit.getPluginManager().registerEvents(twitchuntCommand, this);
+
+        new Clock(this);
+
+        eventsController = new EventsController(this);
+
+        effectController = new EffectController(this);
 
         //Registering Twitch bot
         this.bot = new Bot(this, configReader);
+
+        pollCreator = new PollCreator(this, bot, configReader);
+
+        dependencyResolver.registerEvents();
 
     }
 
@@ -79,6 +101,18 @@ public final class Twitchunt extends JavaPlugin {
 
     public Manager getManager() {
         return manager;
+    }
+
+    public PollCreator getPollCreator() {
+        return pollCreator;
+    }
+
+    public EffectController getEffectController() {
+        return effectController;
+    }
+
+    public EventsController getEventsController() {
+        return eventsController;
     }
 
     public static Twitchunt getInstance() {

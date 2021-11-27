@@ -8,7 +8,13 @@ configPollDurationInvalid: "Option pollDuration in config is less than 20, defau
 configPollIntervalInvalid: "Option pollInterval is too short, defaulting to pollDuration + 10"
 tooLongLore1: "Too long lore of effect (max 25 letters)"
 tooLongLore2: "Repair this and restart server!"
+notEnoughEffects: "Not enough effects to generate - enable some more, this error may cause exception!"
+notEnoughEffectsWithDisable: "Not enough effects to start poll, enable more and then start polls"
+badChoicesAmount: "Amount of choices is bad, defaulting to 3 (please set to: 2-5)"
+paidEffectNull: "Getting poll choice in paidEffects is NULL"
+notFoundID: "Not found effect ID"
 
+pollStarted: "[TWITCHUNT] Poll started!"
 huntedAdded: "§aAdded hunted player"
 huntedRemoved: "§aHunted has been removed"
 playersIsOnHuntedList: "§4This player exist in hunted list"

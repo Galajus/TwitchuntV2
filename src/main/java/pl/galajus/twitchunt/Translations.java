@@ -21,7 +21,7 @@ public class Translations {
         return Objects.requireNonNullElseGet(translations.getString(key, null), () -> "[Translation Key: " + key + "]");
     }
 
-    private void initialize() {
+    public void initialize() {
         File translationFile = new File(twitchunt.getDataFolder(), "translation.yml");
         if (!translationFile.exists()) {
             twitchunt.saveResource("translation.yml", false);

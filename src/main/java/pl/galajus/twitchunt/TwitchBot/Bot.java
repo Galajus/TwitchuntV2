@@ -6,7 +6,6 @@ import com.github.philippheuer.events4j.simple.SimpleEventHandler;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.auth.providers.TwitchIdentityProvider;
-import com.github.twitch4j.eventsub.domain.PollChoice;
 import com.github.twitch4j.helix.domain.User;
 import com.github.twitch4j.helix.domain.UserList;
 import com.github.twitch4j.pubsub.events.ChannelBitsEvent;
@@ -17,7 +16,6 @@ import pl.galajus.twitchunt.ConfigReader;
 import pl.galajus.twitchunt.TwitchBot.TwitchEvents.*;
 import pl.galajus.twitchunt.Twitchunt;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bot {
@@ -64,7 +62,7 @@ public class Bot {
             twitchClient.getPubSub().listenForSubscriptionEvents(credential, channel.getId());
             twitchClient.getPubSub().listenForPollEvents(credential, channel.getId());
 
-            Poll poll = new Poll(twitchunt);
+            Poll poll = new Poll(twitchunt, this);
             Cheer cheer = new Cheer(twitchunt);
             Follow follow = new Follow(twitchunt);
             Subscribe subscribe = new Subscribe(twitchunt);
@@ -85,20 +83,13 @@ public class Bot {
         botID = new TwitchIdentityProvider(null, null, null)
                 .getAdditionalCredentialInformation(credential).map(OAuth2Credential::getUserId).orElse(null);
 
-
-        List<PollChoice> choices = new ArrayList<>();
-        choices.add(new PollChoice().withTitle("testowanko1").withId("jakiestam1"));
-        choices.add(new PollChoice().withTitle("testowanko2").withId("jakiestam2"));
-
-        com.github.twitch4j.helix.domain.Poll poll = new com.github.twitch4j.helix.domain.Poll()
-                .withBroadcasterId(this.botID)
-                .withId(configReader.getChannelName())
-                .withChoices(choices)
-                .withTitle("Testowy tytulik")
-                .withDurationSeconds(30);
-
-        twitchClient.getHelix().createPoll(configReader.getChatToken(), poll).queue();
-
     }
 
+    public String getBotID() {
+        return this.botID;
+    }
+
+    public TwitchClient getTwitchClient() {
+        return twitchClient;
+    }
 }

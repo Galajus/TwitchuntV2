@@ -3,6 +3,8 @@ package pl.galajus.twitchunt.Dependency;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import pl.galajus.twitchunt.Minecraft.Events.*;
+import pl.galajus.twitchunt.Minecraft.EventsController;
 import pl.galajus.twitchunt.Translations;
 import pl.galajus.twitchunt.Twitchunt;
 
@@ -21,7 +23,6 @@ public class DependencyResolver {
         this.translations = translations;
         this.isPaper = paperCheck();
         this.registerPaperDependencies();
-        this.registerEvents();
     }
 
     public void sendMessage(Player p, String message) {
@@ -132,8 +133,23 @@ public class DependencyResolver {
         Bukkit.getLogger().log(Level.SEVERE, twitchunt.getPrefix() + translations.getTranslation(key));
     }
 
-    private void registerEvents() {
+    public void registerEvents() {
 
+        EventsController eventsController = twitchunt.getEventsController();
+        if (isPaper) {
+            Bukkit.getPluginManager().registerEvents(new ItemPickup(twitchunt, eventsController), twitchunt);
+        } else {
+            Bukkit.getPluginManager().registerEvents(new ItemPickupSpigot(twitchunt, eventsController), twitchunt);
+        }
+        Bukkit.getPluginManager().registerEvents(new BlockBreak(twitchunt, eventsController), twitchunt);
+        Bukkit.getPluginManager().registerEvents(new EntityDamageEntity(twitchunt, eventsController), twitchunt);
+        Bukkit.getPluginManager().registerEvents(new EntityDeath(twitchunt, eventsController), twitchunt);
+        Bukkit.getPluginManager().registerEvents(new InventoryClick(twitchunt, eventsController), twitchunt);
+        Bukkit.getPluginManager().registerEvents(new InventoryOpen(twitchunt, eventsController), twitchunt);
+    }
+
+    public boolean isPaper() {
+        return isPaper;
     }
 
     private void registerPaperDependencies() {
@@ -147,6 +163,11 @@ public class DependencyResolver {
     }
 
     private boolean paperCheck() {
+
+        if (twitchunt.getConfigReader().getForceSpigotUsage()) {
+            return false;
+        }
+
         try {
             String paperTest = Class.forName("com.destroystokyo.paper.VersionHistoryManager$VersionData").toString();
             if (!paperTest.isBlank()) {

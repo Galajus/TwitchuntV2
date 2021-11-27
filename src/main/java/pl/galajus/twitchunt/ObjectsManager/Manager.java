@@ -10,6 +10,7 @@ public class Manager {
 
     private final Twitchunt twitchunt;
     private final Map<Integer, PluginPollChoice> pluginPollChoicesList = Collections.synchronizedMap(new HashMap<>());
+    private final Map<Integer, Object> effectsToCast = Collections.synchronizedMap(new HashMap<>());
 
     public Manager(Twitchunt twitchunt) {
         this.twitchunt = twitchunt;
@@ -27,6 +28,10 @@ public class Manager {
     public void reloadConfigOptions() {
         pluginPollChoicesList.clear();
         twitchunt.getConfigReader().readConfigs();
+    }
+
+    private void xd() {
+
     }
 
 

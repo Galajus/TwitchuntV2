@@ -1,5 +1,6 @@
 #DO NOT CHANGE id and LORE MUST BE UNIQUE
 #Edit only lore and enabled max 25 chars per lore
+#Disabled effect can be used in paid options (points redemption, donations etc)
 
 effects:
   creepers:

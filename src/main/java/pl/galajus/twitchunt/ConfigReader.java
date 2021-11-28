@@ -49,27 +49,42 @@ public class ConfigReader {
         }
         twitchunt.saveDefaultConfig();
 
+        ConfigurationSection section = mainConfig.getConfigurationSection("twitchRedemptions");
+
+        if (section != null) {
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+                try {
+                    for (var entry : section.getValues(false).entrySet()) {
+                        twitchunt.getManager().addTwitchReward(entry.getKey(), Integer.parseInt(entry.getValue().toString()));
+                    }
+                } catch (Exception ex) {
+                    twitchunt.getDependencyResolver().errorLogToConsole("IDNumberCast");
+                }
+
+            }, 1);
+        }
+
         this.validateConfig();
     }
 
     public String getChatToken() {
-        return mainConfig.getString("chatToken");
+        return mainConfig.getString("chatToken", "");
     }
 
     public String getClientID() {
-        return mainConfig.getString("clientID");
+        return mainConfig.getString("clientID", "");
     }
 
     public String getClientSecret() {
-        return mainConfig.getString("clientSecret");
+        return mainConfig.getString("clientSecret", "");
     }
 
     public String getChannelName() {
-        return mainConfig.getString("channelName");
+        return mainConfig.getString("channelName", "");
     }
 
     public String getStartMessage() {
-        return mainConfig.getString("startMessage");
+        return mainConfig.getString("startMessage", "Twitchunt by Galajus ready to play!");
     }
 
     public List<String> getHuntedPlayersAsStrings() {
@@ -91,39 +106,55 @@ public class ConfigReader {
     }
 
     public Long getPollDuration() {
-        return mainConfig.getLong("pollDuration");
+        return mainConfig.getLong("pollDuration", 30);
     }
 
     public Long getPollInterval() {
-        return mainConfig.getLong("pollInterval");
+        return mainConfig.getLong("pollInterval", 60);
     }
 
     public Integer getOptionsPerPoll() {
-        return mainConfig.getInt("optionsPerPoll");
+        return mainConfig.getInt("optionsPerPoll", 3);
     }
 
     public String getPollTitle() {
-        return mainConfig.getString("pollTitle");
+        return mainConfig.getString("pollTitle", "Poll title not set");
     }
 
     public boolean getPollInstaStart() {
-        return mainConfig.getBoolean("pollInstaStart");
+        return mainConfig.getBoolean("pollInstaStart", true);
     }
 
     public boolean getForceSpigotUsage() {
-        return mainConfig.getBoolean("forceSpigotUsage");
+        return mainConfig.getBoolean("forceSpigotUsage", false);
     }
 
     public boolean isSubsEffectsEnabled() {
-        return mainConfig.getBoolean("SubsEnabled");
+        return mainConfig.getBoolean("SubsEnabled", true);
     }
 
     public boolean isBitsEffectsEnabled() {
-        return mainConfig.getBoolean("BitsEnabled");
+        return mainConfig.getBoolean("BitsEnabled", true);
     }
 
     public boolean isTwitchMessageEnabled() {
-        return mainConfig.getBoolean("twitchMessagesEnabled");
+        return mainConfig.getBoolean("twitchMessagesEnabled", true);
+    }
+
+    public boolean isEnabledBroadcastResultOnMinecraft() {
+        return mainConfig.getBoolean("broadcastResultOnMinecraftChat", true);
+    }
+
+    public boolean isEnabledSendResultOnTwitch() {
+        return mainConfig.getBoolean("sendResultOnTwitchChat", true);
+    }
+
+    public boolean isEnabledShowResultTitleToHuntedPlayers() {
+        return mainConfig.getBoolean("showResultTitleToHuntedPlayers", true);
+    }
+
+    public boolean isEnabledInfoOnTwitchAboutStartedPoll() {
+        return mainConfig.getBoolean("showInfoOnTwitchAboutStartedPoll", true);
     }
 
     public List<Integer> getBitsOne() {
@@ -254,23 +285,27 @@ public class ConfigReader {
         if (configEffectList != null) {
             for (Map.Entry<String, Object> entry : configEffectList.getValues(false).entrySet()) {
 
-                if (effectsConfig.getBoolean("effects." + entry.getKey() + ".enabled")) {
-                    int id = effectsConfig.getInt("effects." + entry.getKey() + ".id");
-                    String lore = effectsConfig.getString("effects." + entry.getKey() + ".lore");
-                    if (lore == null) {
-                        lore = "[empty lore]";
-                    }
-                    if (lore.length() > 25) {
-                        Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
-                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
-                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
-                            Bukkit.getPluginManager().disablePlugin(twitchunt);
-                        },1);
 
-                        return;
-                    }
-                    new PluginPollChoice(id, lore);
+                int id = effectsConfig.getInt("effects." + entry.getKey() + ".id");
+                String lore = effectsConfig.getString("effects." + entry.getKey() + ".lore");
+                if (lore == null) {
+                    lore = "[empty lore]";
                 }
+                if (lore.length() > 25) {
+                    Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+                        twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
+                        twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
+                        Bukkit.getPluginManager().disablePlugin(twitchunt);
+                    },1);
+
+                    return;
+                }
+                if (effectsConfig.getBoolean("effects." + entry.getKey() + ".enabled")) {
+                    new PluginPollChoice(id, lore, true);
+                } else {
+                    new PluginPollChoice(id, lore, false);
+                }
+
             }
         }
         this.loadCustomEffects();
@@ -281,27 +316,31 @@ public class ConfigReader {
         if (configCustomEffectList != null) {
             for (Map.Entry<String, Object> entry : configCustomEffectList.getValues(false).entrySet()) {
 
-                if (customEffectsConfig.getBoolean("effects." + entry.getKey() + ".enabled")) {
-                    int id = customEffectsConfig.getInt("effects." + entry.getKey() + ".id");
-                    String lore = customEffectsConfig.getString("effects." + entry.getKey() + ".lore");
-                    String command1 = customEffectsConfig.getString("effects." + entry.getKey() + ".command");
-                    String command2 = customEffectsConfig.getString("effects." + entry.getKey() + ".command2");
-                    String commandDelay1 = customEffectsConfig.getString("effects." + entry.getKey() + ".commandDelay");
-                    String commandDelay2 = customEffectsConfig.getString("effects." + entry.getKey() + ".commandDelay2");
-                    int delay = customEffectsConfig.getInt("effects." + entry.getKey() + ".delay");
-                    if (lore == null) {
-                        lore = "[empty lore]";
-                    }
-                    if (lore.length() > 25) {
-                        Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
-                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
-                            twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
-                            Bukkit.getPluginManager().disablePlugin(twitchunt);
-                        },1);
-                        return;
-                    }
-                    new PluginPollChoice(id, lore, command1, command2, delay, commandDelay1, commandDelay2);
+
+                int id = customEffectsConfig.getInt("effects." + entry.getKey() + ".id");
+                String lore = customEffectsConfig.getString("effects." + entry.getKey() + ".lore");
+                String command1 = customEffectsConfig.getString("effects." + entry.getKey() + ".command");
+                String command2 = customEffectsConfig.getString("effects." + entry.getKey() + ".command2");
+                String commandDelay1 = customEffectsConfig.getString("effects." + entry.getKey() + ".commandDelay");
+                String commandDelay2 = customEffectsConfig.getString("effects." + entry.getKey() + ".commandDelay2");
+                int delay = customEffectsConfig.getInt("effects." + entry.getKey() + ".delay");
+                if (lore == null) {
+                    lore = "[empty lore]";
                 }
+                if (lore.length() > 25) {
+                    Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
+                        twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
+                        twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
+                        Bukkit.getPluginManager().disablePlugin(twitchunt);
+                    },1);
+                    return;
+                }
+                if (customEffectsConfig.getBoolean("effects." + entry.getKey() + ".enabled")) {
+                    new PluginPollChoice(id, lore, command1, command2, delay, commandDelay1, commandDelay2, true);
+                } else {
+                    new PluginPollChoice(id, lore, command1, command2, delay, commandDelay1, commandDelay2, false);
+                }
+
             }
         }
     }

@@ -24,7 +24,7 @@ chatToken: "TOKEN"
 clientID: "ID"
 clientSecret: "SECRET"
 
-forceSpigotUsage: false #helpfull with older versions of paper or whole server (lower than 1.16.5)
+forceSpigotUsage: false #helpfull with older versions of paper or whole server (lower than 1.17)
 
 #-------CHANGE WHENEVER YOU WANT /TWITCHUNT RELOAD-----------
 
@@ -33,22 +33,36 @@ excludeSenders:
   - "bot1"
   - "bot2"
 #Size of letters are important!
-huntedPlayer: "Someone"
+huntedPlayers:
+  - "Someone"
+  - "SomeoneTwo"
 optionsPerPoll: 3 #Must be between 2 and 5
 pollInstaStart: true #Start poll after run /twitchunt start or wait pollInterval and then start poll
 pollDuration: 25
 pollTitle: "Twitchunt effect poll!" #Do not change without restart server! If poll not showing probably u used not allowed word/s
 pollInterval: 60
-#configure stream messages in minecraft:
+#configure stream messages in minecraft and Twitch:
 twitchMessagesEnabled: true
+broadcastResultOnMinecraftChat: true
+sendResultOnTwitchChat: true
+showResultTitleToHuntedPlayers: true
+showInfoOnTwitchAboutStartedPoll: true
 
 #ALL BELLOW IS IN BETA
+
+#Add to your twitch account some channel points rewards and assign name of reward to effect id
+twitchRedemptions:
+  ExampleRewardName1: 12
+  ExampleRewardName2: 34
+  ExampleRewardName3: 54
+  ExampleRewardName4: 9997
+
 #BITS, SUBS AND FOLLOWS EFFECTS IS CASTING RANDOMLY FROM THE GIVEN ID'S
 
 #BITS CONFIG:
 BitsEnabled: true
-#First starting from 0, pattern : (a, b>
-BitsThresholods:
+#First starting from 0, pattern : bits >= treshold
+BitsThresholds:
   FirstLevel: 10
   SecondLevel: 50
   ThirdLevel: 150
@@ -87,15 +101,5 @@ SubsEffects:
     - 22
     - 23
     - 24
-
-#FOLLOW CONFIG:
-FollowEnabled: true
-#type id's of effects, custom have prefix "999", for example 999
-FollowEffects:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
 
 #TIPS LOOK StreamElements.yml

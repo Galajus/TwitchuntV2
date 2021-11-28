@@ -12,7 +12,7 @@ public class PluginPollChoice {
     private final String customDelayCommand2;
     private final int delay;
 
-    public PluginPollChoice(int id, String lore) {
+    public PluginPollChoice(int id, String lore, boolean enabled) {
         this.id = id;
         this.lore = lore;
         customCommand1 = null;
@@ -20,10 +20,14 @@ public class PluginPollChoice {
         customDelayCommand1 = null;
         customDelayCommand2 = null;
         delay = 0;
-        Twitchunt.getInstance().getManager().addPluginPollChoice(id, this);
+        if (enabled) {
+            Twitchunt.getInstance().getManager().addPluginPollChoice(id, this);
+        } else {
+            Twitchunt.getInstance().getManager().addDisabledPluginPollChoice(id, this);
+        }
     }
 
-    public PluginPollChoice(int id, String lore, String customCommand1, String customCommand2, int delay, String customDelayCommand1, String customDelayCommand2) {
+    public PluginPollChoice(Integer id, String lore, String customCommand1, String customCommand2, int delay, String customDelayCommand1, String customDelayCommand2, boolean enabled) {
         String stringID = "999" + id;
         int tempID;
         tempID = 0;
@@ -40,7 +44,11 @@ public class PluginPollChoice {
         this.customDelayCommand1 = customDelayCommand1;
         this.customDelayCommand2 = customDelayCommand2;
         this.delay = delay;
-        Twitchunt.getInstance().getManager().addPluginPollChoice(id, this);
+        if (enabled) {
+            Twitchunt.getInstance().getManager().addPluginPollChoice(this.id, this);
+        } else {
+            Twitchunt.getInstance().getManager().addDisabledPluginPollChoice(this.id, this);
+        }
     }
 
     public int getId() {

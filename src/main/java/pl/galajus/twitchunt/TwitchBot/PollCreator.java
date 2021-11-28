@@ -57,7 +57,9 @@ public class PollCreator {
                 .withDurationSeconds(configReader.getPollDuration().intValue());
 
         bot.getTwitchClient().getHelix().createPoll(configReader.getChatToken(), poll).queue();
-        bot.getTwitchClient().getChat().sendMessage(configReader.getChannelName(), twitchunt.getTranslations().getTranslation("pollStarted"));
+        if (configReader.isEnabledInfoOnTwitchAboutStartedPoll()) {
+            bot.getTwitchClient().getChat().sendMessage(configReader.getChannelName(), twitchunt.getTranslations().getTranslation("pollStarted"));
+        }
 
     }
 
@@ -117,6 +119,10 @@ public class PollCreator {
             return true;
         }
         return  false;
+    }
+
+    public boolean isPollsEnabled() {
+        return pollsEnabled;
     }
 
 }

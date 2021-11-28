@@ -3,6 +3,7 @@ package pl.galajus.twitchunt.Dependency;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 import pl.galajus.twitchunt.Minecraft.Events.*;
 import pl.galajus.twitchunt.Minecraft.EventsController;
 import pl.galajus.twitchunt.Translations;
@@ -25,6 +26,14 @@ public class DependencyResolver {
         this.registerPaperDependencies();
     }
 
+    public String getTranslatedText(String key, String... args) {
+        String text = translations.getTranslation(key);
+        if (args.length != 0) {
+            text = this.convertArgs(text, args);
+        }
+        return text;
+    }
+
     public void sendMessage(Player p, String message) {
         if (isPaper) {
             paperDependency.sendMessage(p, message);
@@ -41,19 +50,29 @@ public class DependencyResolver {
         }
     }
 
-    public void sendTranslatedMessage(Player p, String key) {
+    public void sendTranslatedMessage(Player p, String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
         if (isPaper) {
-            paperDependency.sendMessage(p, translations.getTranslation(key));
+            paperDependency.sendMessage(p, translatedText);
         } else {
-            spigotDependency.sendMessage(p, translations.getTranslation(key));
+            spigotDependency.sendMessage(p, translatedText);
         }
     }
 
-    public void sendTranslatedMessage(CommandSender p, String key) {
+    public void sendTranslatedMessage(CommandSender p, String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
         if (isPaper) {
-            paperDependency.sendMessage(p, translations.getTranslation(key));
+            paperDependency.sendMessage(p, translatedText);
         } else {
-            spigotDependency.sendMessage(p, translations.getTranslation(key));
+            spigotDependency.sendMessage(p, translatedText);
         }
     }
 
@@ -73,19 +92,29 @@ public class DependencyResolver {
         }
     }
 
-    public void sendTranslatedMessageWithoutPrefix(Player p, String key) {
+    public void sendTranslatedMessageWithoutPrefix(Player p, String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
         if (isPaper) {
-            paperDependency.sendMessageWithoutPrefix(p, translations.getTranslation(key));
+            paperDependency.sendMessageWithoutPrefix(p, translatedText);
         } else {
-            spigotDependency.sendMessageWithoutPrefix(p, translations.getTranslation(key));
+            spigotDependency.sendMessageWithoutPrefix(p, translatedText);
         }
     }
 
-    public void sendTranslatedMessageWithoutPrefix(CommandSender p, String key) {
+    public void sendTranslatedMessageWithoutPrefix(CommandSender p, String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
         if (isPaper) {
-            paperDependency.sendMessageWithoutPrefix(p, translations.getTranslation(key));
+            paperDependency.sendMessageWithoutPrefix(p, translatedText);
         } else {
-            spigotDependency.sendMessageWithoutPrefix(p, translations.getTranslation(key));
+            spigotDependency.sendMessageWithoutPrefix(p, translatedText);
         }
     }
 
@@ -105,32 +134,69 @@ public class DependencyResolver {
         }
     }
 
-    public void broadcastTranslatedMessage(String key) {
+    public void broadcastTranslatedMessage(String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
         if (isPaper) {
-            paperDependency.broadcastMessage(translations.getTranslation(key));
+            paperDependency.broadcastMessage(translatedText);
         } else {
-            spigotDependency.broadcastMessage(translations.getTranslation(key));
+            spigotDependency.broadcastMessage(translatedText);
         }
     }
 
-    public void broadcastTranslatedMessageWithoutPrefix(String key) {
+    public void broadcastTranslatedMessageWithoutPrefix(String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
         if (isPaper) {
-            paperDependency.broadcastMessageWithoutPrefix(translations.getTranslation(key));
+            paperDependency.broadcastMessageWithoutPrefix(translatedText);
         } else {
-            spigotDependency.broadcastMessageWithoutPrefix(translations.getTranslation(key));
+            spigotDependency.broadcastMessageWithoutPrefix(translatedText);
         }
     }
 
-    public void infoLogToConsole(String key) {
-        Bukkit.getLogger().log(Level.INFO, twitchunt.getPrefix() + translations.getTranslation(key));
+    public void infoLogToConsole(String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
+        Bukkit.getLogger().log(Level.INFO, twitchunt.getPrefix() + translatedText);
     }
 
-    public void warningLogToConsole(String key) {
-        Bukkit.getLogger().log(Level.WARNING, twitchunt.getPrefix() + translations.getTranslation(key));
+    public void warningLogToConsole(String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
+        Bukkit.getLogger().log(Level.WARNING, twitchunt.getPrefix() + translatedText);
     }
 
-    public void errorLogToConsole(String key) {
-        Bukkit.getLogger().log(Level.SEVERE, twitchunt.getPrefix() + translations.getTranslation(key));
+    public void errorLogToConsole(String key, @Nullable String... args) {
+        String translatedText = translations.getTranslation(key);
+        if (args.length != 0) {
+            translatedText = this.convertArgs(translatedText, args);
+        }
+
+        Bukkit.getLogger().log(Level.SEVERE, twitchunt.getPrefix() + translatedText);
+    }
+
+    public void infoLogToConsoleWithoutTranslation(String message) {
+        Bukkit.getLogger().log(Level.INFO, twitchunt.getPrefix() + message);
+    }
+
+    public void warningLogToConsoleWithoutTranslation(String message) {
+        Bukkit.getLogger().log(Level.WARNING, twitchunt.getPrefix() + message);
+    }
+
+    public void errorLogToConsoleWithoutTranslation(String message) {
+        Bukkit.getLogger().log(Level.SEVERE, twitchunt.getPrefix() + message);
     }
 
     public void registerEvents() {
@@ -150,6 +216,19 @@ public class DependencyResolver {
 
     public boolean isPaper() {
         return isPaper;
+    }
+
+    private String convertArgs(String translatedText, String... args) {
+
+        int loopNO = 1;
+        String template = "%arg";
+
+        for (String arg : args) {
+            String replace = template + loopNO + "%";
+            translatedText = translatedText.replaceAll(replace, arg);
+            loopNO++;
+        }
+        return translatedText;
     }
 
     private void registerPaperDependencies() {

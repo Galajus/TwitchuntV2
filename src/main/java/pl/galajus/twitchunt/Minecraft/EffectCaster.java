@@ -35,6 +35,7 @@ public class EffectCaster {
      * Blind hunted for 10 second
      */
     public void effectBlindness() {
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             PotionEffect effect = new PotionEffect(PotionEffectType.BLINDNESS, 10 * 20, 0);
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.addPotionEffect(effect));
@@ -45,7 +46,7 @@ public class EffectCaster {
      * Blind hunted for 20 second
      */
     public void effectBlindnessv2() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             PotionEffect effect = new PotionEffect(PotionEffectType.BLINDNESS, 20 * 20, 0);
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.addPotionEffect(effect));
@@ -56,6 +57,7 @@ public class EffectCaster {
      * Block damage of other entities for 30 seconds
      */
     public void effectBlockDamageOnAttack() {
+        this.updateHunters();
         eventsController.setEntityDamageEntityBLock(true);
         Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setEntityDamageEntityBLock(false), 30 * 20);
     }
@@ -64,7 +66,7 @@ public class EffectCaster {
      * Block inventory click for 30 seconds
      */
     public void effectBlockInventoryClick() {
-
+        this.updateHunters();
         eventsController.setBlockInventoryClick(true);
         Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setBlockInventoryClick(false), 30 * 20);
 
@@ -74,7 +76,7 @@ public class EffectCaster {
      * Block pickup for 45 seconds
      */
     public void effectBlockPickup() {
-
+        this.updateHunters();
         eventsController.setBlockItemPickUp(true);
         Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setBlockItemPickUp(false), 45 * 20);
 
@@ -84,7 +86,7 @@ public class EffectCaster {
      * Double for 45 seconds
      */
     public void effectBoostEntityDrop() {
-
+        this.updateHunters();
         eventsController.setDoubleEntityDeathDrop(true);
         Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setDoubleEntityDeathDrop(false), 45 * 20);
     }
@@ -93,7 +95,7 @@ public class EffectCaster {
      * Give 16 bread to hunted
      */
     public void effectGiveSomeBread() {
-
+        this.updateHunters();
         ItemStack bread = new ItemStack(Material.BREAD, 16);
 
         for (Player hunted : huntedPlayers) {
@@ -105,7 +107,7 @@ public class EffectCaster {
      * Breaking blocks take damage to hunted for 30 seconds
      */
     public void damageOnBreak() {
-
+        this.updateHunters();
         eventsController.setDamageOnBreak(true);
         Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setDamageOnBreak(false), 30 * 20);
     }
@@ -114,7 +116,7 @@ public class EffectCaster {
      * Make player burning 8 seconds
      */
     public void effectBurn() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.setFireTicks(8*20));
         }
@@ -124,7 +126,7 @@ public class EffectCaster {
      * Clear hunted inventory
      */
     public void effectClearInventory() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             hunted.getInventory().clear();
         }
@@ -134,7 +136,7 @@ public class EffectCaster {
      * Spawn some creepers around hunted player
      */
     public void effectCreepers() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> {
                 Location hLoc = hunted.getLocation();
@@ -152,7 +154,7 @@ public class EffectCaster {
      * Set block at hunted to lava
      */
     public void effectFloorIsLava() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> {
                 Location loc = hunted.getLocation();
@@ -165,7 +167,7 @@ public class EffectCaster {
      * Set Hp and feed level to 20
      */
     public  void effectHealAndFeed() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             hunted.setHealth(20);
             hunted.setFoodLevel(20);
@@ -176,7 +178,7 @@ public class EffectCaster {
      * Levitation for hunted for 10 seconds
      */
     public void effectLevitation() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.LEVITATION, 10 * 20, 0);
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.addPotionEffect(effect));
@@ -187,7 +189,7 @@ public class EffectCaster {
      * Levitation for hunted for 20 seconds
      */
     public void effectLevitationv2() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.LEVITATION, 20 * 20, 0);
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.addPotionEffect(effect));
@@ -198,7 +200,7 @@ public class EffectCaster {
      * Block open inventory for 60 seconds
      */
     public void effectBlockInventory() {
-
+        this.updateHunters();
         eventsController.setBlockInventoryOpen(true);
         Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setBlockInventoryOpen(false), 60 * 20);
 
@@ -208,6 +210,7 @@ public class EffectCaster {
      * Make morning and sunny weather
      */
     public void effectMorningAndSun() {
+        this.updateHunters();
         World world = Bukkit.getServer().getWorld("world");
         if (world != null) {
             Bukkit.getScheduler().runTask(twitchunt, () -> {
@@ -221,7 +224,7 @@ public class EffectCaster {
      * Nausea for 30 seconds
      */
     public void effectNausea() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.CONFUSION, 30 * 20, 0);
 
         for (Player hunted : huntedPlayers) {
@@ -233,13 +236,13 @@ public class EffectCaster {
      * Find the nearest village
      */
     public void effectNearestVillage() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             if (hunted.getLocation().getWorld().getName().equals("world")) {
                 Bukkit.getScheduler().runTask(twitchunt, () -> {
                     Location village = hunted.getLocation().getWorld().locateNearestStructure(hunted.getLocation(), StructureType.VILLAGE, 1000, false);
                     if (village != null) {
-                        twitchunt.getDependencyResolver().sendMessage(hunted, "Location of nearest village: X: " + village.getBlockX() + " Y: " + village.getBlockY()  + " Z: " + village.getBlockZ());
+                        twitchunt.getDependencyResolver().sendMessage(hunted, "Location of nearest village: X: " + village.getBlockX() + " Z: " + village.getBlockZ());
                     } else {
                         twitchunt.getDependencyResolver().sendMessage(hunted, "Not found any village in radius 1000");
                     }
@@ -254,7 +257,7 @@ public class EffectCaster {
      * Make night in World, world
      */
     public void effectNight() {
-
+        this.updateHunters();
         World world = Bukkit.getServer().getWorld("world");
         if (world != null) {
             Bukkit.getScheduler().runTask(twitchunt, () -> world.setTime(13000));
@@ -265,6 +268,7 @@ public class EffectCaster {
      * Nightvison for 60 seconds
      */
     public void effectNightvision() {
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.NIGHT_VISION, 60 * 20, 0);
 
         for (Player hunted : huntedPlayers) {
@@ -276,7 +280,7 @@ public class EffectCaster {
      * Set Hp of hunted to 1 and food level to 0
      */
     public void effectOneHealth() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             hunted.setHealth(1);
             hunted.setFoodLevel(0);
@@ -287,7 +291,7 @@ public class EffectCaster {
      * Poisoning for 60 seconds
      */
     public void effectPoison() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.POISON, 60 * 20, 0);
 
         for (Player hunted : huntedPlayers) {
@@ -299,7 +303,7 @@ public class EffectCaster {
      * Regeneration lvl 3 for 15 seconds
      */
     public void effectRegeneration() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.REGENERATION, 15 * 20, 2);
 
         for (Player hunted : huntedPlayers) {
@@ -311,7 +315,7 @@ public class EffectCaster {
      * Remove random item from hunted inventory
      */
     public void effectRemoveRandomItem() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             List<ItemStack> huntedItems = new ArrayList<>();
             for (ItemStack itemStack : hunted.getInventory()) {
@@ -326,7 +330,7 @@ public class EffectCaster {
      * Clear hunted inventory and fill sand
      */
     public void effectSandAttack() {
-
+        this.updateHunters();
         ItemStack sand = new ItemStack(Material.SAND, 4000);
 
         for (Player hunted : huntedPlayers) {
@@ -338,7 +342,7 @@ public class EffectCaster {
      * Slow for 60 seconds
      */
     public void effectSlow() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.SLOW, 60 * 20, 0);
 
         for (Player hunted : huntedPlayers) {
@@ -350,7 +354,7 @@ public class EffectCaster {
      * Set gamemode of hunted to spectator for 5 seconds
      */
     public void effectSpectator() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> {
 
@@ -366,7 +370,7 @@ public class EffectCaster {
      * Set gamemode of hunted to spectator for 10 seconds
      */
     public void effectSpectatorv2() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> {
 
@@ -383,7 +387,7 @@ public class EffectCaster {
      * SPIGOT COMPATIBLE
      */
     public void effectTeleportRandomSpigot() {
-
+        this.updateHunters();
         Bukkit.getScheduler().runTaskAsynchronously(twitchunt, () -> {
 
             for (Player hunted : huntedPlayers) {
@@ -412,14 +416,14 @@ public class EffectCaster {
      * SPIGOT COMPATIBLE
      */
     public void effectTeleportUpSpigot() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.teleport(hunted.getLocation().add(0, 3, 0)));
         }
     }
 
     public void effectTeleportUpSpigotv2() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.teleport(hunted.getLocation().add(0, 6, 0)));
         }
@@ -429,7 +433,7 @@ public class EffectCaster {
      * Spawn primed tnt at hunted
      */
     public void effectSpawnTNT() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> {
                 Location loc = hunted.getLocation();
@@ -442,7 +446,7 @@ public class EffectCaster {
      * Wither lvl 2 effect for 20 seconds
      */
     public void effectWitherPoison() {
-
+        this.updateHunters();
         PotionEffect effect = new PotionEffect(PotionEffectType.WITHER, 20 * 20, 1);
 
         for (Player hunted : huntedPlayers) {
@@ -451,13 +455,14 @@ public class EffectCaster {
     }
 
     public  void effectZombieAttack() {
-
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             zombieAttack(hunted);
         }
     }
 
     private void zombieAttack(Player hunted) {
+        this.updateHunters();
         new BukkitRunnable() {
             private int wait = 0;
 

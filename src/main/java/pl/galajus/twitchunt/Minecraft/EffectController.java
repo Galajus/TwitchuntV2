@@ -3,6 +3,7 @@ package pl.galajus.twitchunt.Minecraft;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import pl.galajus.twitchunt.ObjectsManager.PaidCastType;
 import pl.galajus.twitchunt.ObjectsManager.PluginPollChoice;
 import pl.galajus.twitchunt.Twitchunt;
 
@@ -12,7 +13,7 @@ import java.util.Map;
 public class EffectController {
 
     private final Twitchunt twitchunt;
-    private boolean isPaper;
+    private final boolean isPaper;
     private final EffectCaster effectCaster;
     private final PaperEffectCaster paperEffectCaster;
 
@@ -60,7 +61,7 @@ public class EffectController {
         });
     }
 
-    private void executePluginEffect(int option) {
+    private void executePluginEffect(Integer option) {
 
         Bukkit.getScheduler().runTaskAsynchronously(twitchunt, () -> {
             switch (option) {
@@ -258,21 +259,52 @@ public class EffectController {
         }
     }
 
-    public void castPaidEffect(int effectId) {
+    public void castPaidEffect(Integer effectId, PaidCastType type, String who, @Nullable Double amountOrLevel) {
         String idString = String.valueOf(effectId);
 
+        PluginPollChoice choice = twitchunt.getManager().getPluginPollChoice(effectId);
+
+        if (choice == null) {
+            choice = twitchunt.getManager().getDisabledPluginPollChoice(effectId);
+        }
+
         if (idString.startsWith("999")) {
-
-            PluginPollChoice choice = twitchunt.getManager().getPluginPollChoicesList().get(effectId);
-
             if (choice != null) {
                 customEffect(choice.getCustomCommand1(), choice.getCustomCommand2(), choice.getDelay(), choice.getCustomDelayCommand1(), choice.getCustomDelayCommand2());
+                this.infoAboutPaidCaster(type, who, amountOrLevel, choice.getLore());
             } else {
                 twitchunt.getDependencyResolver().errorLogToConsole("paidEffectNull");
             }
 
         } else {
             executePluginEffect(effectId);
+            this.infoAboutPaidCaster(type, who, amountOrLevel, choice.getLore());
+        }
+    }
+
+    private void infoAboutPaidCaster(PaidCastType type, String who, @Nullable Double amountOrLevel, String effectName) {
+
+        String title = "";
+        if (amountOrLevel == null) {
+            amountOrLevel = 0D;
+        }
+        String subTitle = twitchunt.getDependencyResolver().getTranslatedText("paidEffectSubtitle", effectName);
+
+        if (type.equals(PaidCastType.POINTS_REDEMPTION)) {
+            title = twitchunt.getDependencyResolver().getTranslatedText("pointsRedemptionAlertTitle", who);
+        }
+        if (type.equals(PaidCastType.CHEER)) {
+            title = twitchunt.getDependencyResolver().getTranslatedText("cheerAlertTitle", who, Double.toString(amountOrLevel).replaceAll("\\.0", ""));
+        }
+        if (type.equals(PaidCastType.SUBSCRIPTION)) {
+            title = twitchunt.getDependencyResolver().getTranslatedText("subscriptionAlertTitle", who, Double.toString(amountOrLevel).replaceAll("\\.0", ""));
+        }
+        if (type.equals(PaidCastType.DONATION)) {
+            title = twitchunt.getDependencyResolver().getTranslatedText("donationAlertTitle", who, Double.toString(amountOrLevel).replaceAll("\\.0", ""));
+        }
+
+        for (Player p : twitchunt.getConfigReader().getHuntedPlayers()) {
+            p.sendTitle(title, subTitle, 10, 50, 10);
         }
     }
 

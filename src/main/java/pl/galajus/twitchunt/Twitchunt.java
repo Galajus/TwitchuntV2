@@ -30,8 +30,6 @@ public final class Twitchunt extends JavaPlugin {
     private EventsController eventsController;
     private EffectController effectController;
 
-    private TwitchuntCommand twitchuntCommand;
-
     @Override
     public void onEnable() {
 
@@ -51,7 +49,7 @@ public final class Twitchunt extends JavaPlugin {
         //Registering Commands/Events
         commandsHelper = new CommandsHelper();
 
-        twitchuntCommand = new TwitchuntCommand(this, commandsHelper, dependencyResolver, configReader);
+        TwitchuntCommand twitchuntCommand = new TwitchuntCommand(this, commandsHelper, dependencyResolver, configReader);
         Objects.requireNonNull(getCommand("twitchunt")).setExecutor(twitchuntCommand);
         Bukkit.getPluginManager().registerEvents(twitchuntCommand, this);
 

@@ -13,12 +13,12 @@ public class Follow {
 
     public void onFollow(FollowingEvent e) {
 
-        //TODO Blacklist nicks/ID user of twitch and cooldown
+        /*
 
         String follower = e.getData().getDisplayName();
         twitchunt.getDependencyResolver().broadcastMessage("§bNew follow from: §6" + follower);
 
-        /*
+
         if (TimeChoices.isEnabled()) {
             int random = new Random().nextInt(DataManager.getFollow().size());
             int choiceId = DataManager.getFollow().get(random);

@@ -3,6 +3,7 @@ package pl.galajus.twitchunt.TwitchBot.TwitchEvents;
 import com.github.twitch4j.pubsub.domain.PollData;
 import com.github.twitch4j.pubsub.events.PollsEvent;
 import org.bukkit.entity.Player;
+import pl.galajus.twitchunt.ConfigReader;
 import pl.galajus.twitchunt.TwitchBot.Bot;
 import pl.galajus.twitchunt.Twitchunt;
 
@@ -12,16 +13,20 @@ public class Poll {
 
     private final Twitchunt twitchunt;
     private final Bot bot;
+    private final ConfigReader configReader;
 
     public Poll(Twitchunt twitchunt, Bot bot) {
         this.twitchunt = twitchunt;
         this.bot = bot;
+        this.configReader = twitchunt.getConfigReader();
     }
 
     public void onPoll(PollsEvent e) {
 
+        if (!twitchunt.getPollCreator().isPollsEnabled()) return;
+
         if (e.getType().equals(PollsEvent.EventType.POLL_COMPLETE)) {
-            if (e.getData().getTitle().equalsIgnoreCase(twitchunt.getConfigReader().getPollTitle())) {
+            if (e.getData().getTitle().equalsIgnoreCase(configReader.getPollTitle())) {
                 int bestNO = -1;
                 String bestName = "";
 
@@ -36,14 +41,24 @@ public class Poll {
                 }
 
                 if (!bestName.isBlank()) {
-                    twitchunt.getDependencyResolver().broadcastMessage("§aWon option: §b" + bestName + " §aPoints: §b" + bestNO);
-                    bot.getTwitchClient().getChat().sendMessage(twitchunt.getConfigReader().getChannelName(), "[TWITCHUNT] "  +"Won option: " + bestName + " Points: " + bestNO);
+                    if (configReader.isEnabledBroadcastResultOnMinecraft()) {
+                        twitchunt.getDependencyResolver().broadcastTranslatedMessage("pollResultMinecraftBroadcast", bestName, String.valueOf(bestNO));
+                    }
+                    
+                    if (configReader.isEnabledSendResultOnTwitch()) {
+                        bot.getTwitchClient().getChat().sendMessage(configReader.getChannelName(), twitchunt.getDependencyResolver().getTranslatedText("pollResultTwitchChat", bestName, String.valueOf(bestNO)));
+                    }
                     twitchunt.getEffectController().castEffect(bestName);
 
-                    List<Player> huntedPlayers = twitchunt.getConfigReader().getHuntedPlayers();
+                    List<Player> huntedPlayers = configReader.getHuntedPlayers();
 
-                    for (Player hunted : huntedPlayers) {
-                        hunted.sendTitle("§d" + bestName,  "§5Votes: " + bestNO, 10, 20, 10);
+                    if (configReader.isEnabledShowResultTitleToHuntedPlayers()) {
+                        String translated = twitchunt.getDependencyResolver().getTranslatedText("pollResultTitle", bestName);
+                        String translated2 = twitchunt.getDependencyResolver().getTranslatedText("pollResultSubTitle", String.valueOf(bestNO));
+
+                        for (Player hunted : huntedPlayers) {
+                            hunted.sendTitle(translated, translated2, 10, 20, 10);
+                        }
                     }
 
                 }

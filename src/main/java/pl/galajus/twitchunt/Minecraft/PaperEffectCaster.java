@@ -26,13 +26,11 @@ public class PaperEffectCaster {
         huntedPlayers = twitchunt.getConfigReader().getHuntedPlayers();
     }
 
-
-
     /**
      * Teleport hunted player to random location in radius +/- 4000 from x: 0 z: 0 coords
      */
     public void effectTeleportRandom() {
-
+        this.updateHunters();
         Bukkit.getScheduler().runTaskAsynchronously(twitchunt, () -> {
 
             for (Player hunted : huntedPlayers) {
@@ -59,6 +57,7 @@ public class PaperEffectCaster {
      * Teleport hunted player 3 blocks up
      */
     public void effectTeleportUp() {
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.teleportAsync(hunted.getLocation().add(0, 3, 0)));
         }
@@ -68,6 +67,7 @@ public class PaperEffectCaster {
      * Teleport hunted player 6 blocks up
      */
     public void effectTeleportUpv2() {
+        this.updateHunters();
         for (Player hunted : huntedPlayers) {
             Bukkit.getScheduler().runTask(twitchunt, () -> hunted.teleportAsync(hunted.getLocation().add(0, 6, 0)));
         }

@@ -42,10 +42,23 @@ pollInstaStart: true #Start poll after run /twitchunt start or wait pollInterval
 pollDuration: 25
 pollTitle: "Twitchunt effect poll!" #Do not change without restart server! If poll not showing probably u used not allowed word/s
 pollInterval: 60
-#configure stream messages in minecraft:
+#configure stream messages in minecraft and Twitch:
 twitchMessagesEnabled: true
+broadcastResultOnMinecraftChat: true
+sendResultOnTwitchChat: true
+showResultTitleToHuntedPlayers: true
+showInfoOnTwitchAboutStartedPoll: true
 
 #ALL BELLOW IS IN BETA
+
+#Add to your twitch account some channel points rewards and assign name of reward to effect id
+#Finalize reward on your twitch channel dashboard must be made handy (refund points if reward is purchased but twitchunt not enabled etc.)
+twitchRedemptions:
+  ExampleRewardName1: 12
+  ExampleRewardName2: 34
+  ExampleRewardName3: 54
+  ExampleRewardName4: 9997
+
 #BITS, SUBS AND FOLLOWS EFFECTS IS CASTING RANDOMLY FROM THE GIVEN ID'S
 
 #BITS CONFIG:

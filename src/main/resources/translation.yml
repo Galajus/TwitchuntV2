@@ -1,4 +1,4 @@
-#To translate effect use effects.yml and customEffects.yml
+#To translate effects use effects.yml and customEffects.yml
 
 paperNotFound: "Paper not found, using spigot dependencies"
 configLoadError: "Could not load configs, this is probably bug OR plugin is loaded first time, STOP SERVER, GO TO CONFIG AND ... CONFIGURE!"
@@ -13,6 +13,17 @@ notEnoughEffectsWithDisable: "Not enough effects to start poll, enable more and 
 badChoicesAmount: "Amount of choices is bad, defaulting to 3 (please set to: 2-5)"
 paidEffectNull: "Getting poll choice in paidEffects is NULL"
 notFoundID: "Not found effect ID"
+IDNumberCast: "Some ID in Reward Redemptions are invalid"
+pollResultMinecraftBroadcast: "§aWon option: §b%arg1% §aPoints: §b%arg2%"
+pollResultTwitchChat: "[TWITCHUNT] Won option: %arg1% Points: %arg2%"
+pollResultTitle: "§d%arg1%"
+pollResultSubTitle: "§5Votes: %arg1%"
+
+paidEffectSubtitle: "§dEffect: §b%arg1%"
+pointsRedemptionAlertTitle: "§6%arg1% §dclaimed reward"
+cheerAlertTitle: "§6%arg1% §dsent §6%arg2% §dbits"
+subscriptionAlertTitle: "§6%arg1% §dsubscribed tier: §6%arg2%"
+donationAlertTitle: "§6%arg1% §dsent: §6$%arg2%"
 
 pollStarted: "[TWITCHUNT] Poll started!"
 huntedAdded: "§aAdded hunted player"

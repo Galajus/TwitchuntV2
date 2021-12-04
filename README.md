@@ -1,4 +1,4 @@
-# TwitchuntV2 BETA VERSION
+# TwitchuntV2
 Manhunt with your viewers, second version of plugin with totaly rewrited code.
 This version have breaking changes with code quality of code and have some very interesting features not obtainable in 1.x version. For example: subscription effects, donation effects, cheer effects.
 

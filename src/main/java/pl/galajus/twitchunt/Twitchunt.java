@@ -1,17 +1,13 @@
 package pl.galajus.twitchunt;
 
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.galajus.twitchunt.Commands.CommandsHelper;
-import pl.galajus.twitchunt.Commands.TwitchuntCommand;
 import pl.galajus.twitchunt.Dependency.DependencyResolver;
 import pl.galajus.twitchunt.Minecraft.EffectController;
 import pl.galajus.twitchunt.Minecraft.EventsController;
 import pl.galajus.twitchunt.ObjectsManager.Manager;
 import pl.galajus.twitchunt.TwitchBot.Bot;
 import pl.galajus.twitchunt.TwitchBot.PollCreator;
-
-import java.util.Objects;
 
 public final class Twitchunt extends JavaPlugin {
 
@@ -48,10 +44,6 @@ public final class Twitchunt extends JavaPlugin {
 
         //Registering Commands/Events
         commandsHelper = new CommandsHelper();
-
-        TwitchuntCommand twitchuntCommand = new TwitchuntCommand(this, commandsHelper, dependencyResolver, configReader);
-        Objects.requireNonNull(getCommand("twitchunt")).setExecutor(twitchuntCommand);
-        Bukkit.getPluginManager().registerEvents(twitchuntCommand, this);
 
         new Clock(this);
 

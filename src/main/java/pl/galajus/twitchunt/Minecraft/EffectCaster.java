@@ -54,12 +54,11 @@ public class EffectCaster {
     }
 
     /**
-     * Block damage of other entities for 30 seconds
+     * Block damages to other entities for 30 seconds
      */
     public void effectBlockDamageOnAttack() {
         this.updateHunters();
         eventsController.setEntityDamageEntityBLock(true);
-        Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setEntityDamageEntityBLock(false), 30 * 20);
     }
 
     /**
@@ -68,7 +67,6 @@ public class EffectCaster {
     public void effectBlockInventoryClick() {
         this.updateHunters();
         eventsController.setBlockInventoryClick(true);
-        Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setBlockInventoryClick(false), 30 * 20);
 
     }
 
@@ -78,7 +76,6 @@ public class EffectCaster {
     public void effectBlockPickup() {
         this.updateHunters();
         eventsController.setBlockItemPickUp(true);
-        Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setBlockItemPickUp(false), 45 * 20);
 
     }
 
@@ -88,7 +85,6 @@ public class EffectCaster {
     public void effectBoostEntityDrop() {
         this.updateHunters();
         eventsController.setDoubleEntityDeathDrop(true);
-        Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setDoubleEntityDeathDrop(false), 45 * 20);
     }
 
     /**
@@ -109,7 +105,6 @@ public class EffectCaster {
     public void damageOnBreak() {
         this.updateHunters();
         eventsController.setDamageOnBreak(true);
-        Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setDamageOnBreak(false), 30 * 20);
     }
 
     /**
@@ -202,7 +197,6 @@ public class EffectCaster {
     public void effectBlockInventory() {
         this.updateHunters();
         eventsController.setBlockInventoryOpen(true);
-        Bukkit.getScheduler().runTaskLater(twitchunt, () -> eventsController.setBlockInventoryOpen(false), 60 * 20);
 
     }
 

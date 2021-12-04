@@ -157,6 +157,10 @@ public class ConfigReader {
         return mainConfig.getBoolean("showInfoOnTwitchAboutStartedPoll", true);
     }
 
+    public boolean isEnabledBroadcastStartStreamInMinecraft() {
+        return mainConfig.getBoolean("broadcastStartStreamOnMinecraft", true);
+    }
+
     public List<Integer> getBitsOne() {
         return mainConfig.getIntegerList("BitsEffects.LevelOne");
     }

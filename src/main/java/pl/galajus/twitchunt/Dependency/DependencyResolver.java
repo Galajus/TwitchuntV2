@@ -4,11 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import pl.galajus.twitchunt.Commands.TwitchuntCommand;
+import pl.galajus.twitchunt.Commands.TwitchuntCommandSpigot;
 import pl.galajus.twitchunt.Minecraft.Events.*;
 import pl.galajus.twitchunt.Minecraft.EventsController;
 import pl.galajus.twitchunt.Translations;
 import pl.galajus.twitchunt.Twitchunt;
 
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class DependencyResolver {
@@ -204,8 +207,15 @@ public class DependencyResolver {
         EventsController eventsController = twitchunt.getEventsController();
         if (isPaper) {
             Bukkit.getPluginManager().registerEvents(new ItemPickup(twitchunt, eventsController), twitchunt);
+
+            TwitchuntCommand twitchuntCommand = new TwitchuntCommand(twitchunt, twitchunt.getCommandsHelper(), twitchunt.getDependencyResolver(), twitchunt.getConfigReader());
+            Objects.requireNonNull(twitchunt.getCommand("twitchunt")).setExecutor(twitchuntCommand);
+            Bukkit.getPluginManager().registerEvents(twitchuntCommand, twitchunt);
         } else {
             Bukkit.getPluginManager().registerEvents(new ItemPickupSpigot(twitchunt, eventsController), twitchunt);
+
+            TwitchuntCommandSpigot twitchuntCommandSpigot = new TwitchuntCommandSpigot(twitchunt, twitchunt.getCommandsHelper(), twitchunt.getDependencyResolver(), twitchunt.getConfigReader());
+            Objects.requireNonNull(twitchunt.getCommand("twitchunt")).setExecutor(twitchuntCommandSpigot);
         }
         Bukkit.getPluginManager().registerEvents(new BlockBreak(twitchunt, eventsController), twitchunt);
         Bukkit.getPluginManager().registerEvents(new EntityDamageEntity(twitchunt, eventsController), twitchunt);

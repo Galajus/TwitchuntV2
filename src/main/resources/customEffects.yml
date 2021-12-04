@@ -6,7 +6,7 @@
 #space for y-coord of hunted location: %y-coord%
 #space for z-coord of hunted location: %z-coord%
 #delay in ticks (1 second = 20 ticks - must be positive number!)
-#please not use delayed command without delay or delay < 20 (secure system not ready yet)
+#please do not use delayed command without delay or delay < 20
 #delayed command not execute if delay is not set or is 0
 
 #LORE MUST BE UNIQUE

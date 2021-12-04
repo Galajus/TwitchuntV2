@@ -39,14 +39,15 @@ huntedPlayers:
 optionsPerPoll: 3 #Must be between 2 and 5
 pollInstaStart: true #Start poll after run /twitchunt start or wait pollInterval and then start poll
 pollDuration: 25
-pollTitle: "Twitchunt effect poll!" #Do not change without restart server! If poll not showing probably u used not allowed word/s
-pollInterval: 60
+pollTitle: "Effect poll!" #Do not change without restart server! If poll not showing probably u used not allowed word/s
+pollInterval: 90
 #configure stream messages in minecraft and Twitch:
 twitchMessagesEnabled: true
 broadcastResultOnMinecraftChat: true
 sendResultOnTwitchChat: true
 showResultTitleToHuntedPlayers: true
 showInfoOnTwitchAboutStartedPoll: true
+broadcastStartStreamOnMinecraft: true
 
 #ALL BELLOW IS IN BETA
 

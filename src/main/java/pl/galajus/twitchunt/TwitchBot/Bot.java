@@ -6,6 +6,7 @@ import com.github.philippheuer.events4j.simple.SimpleEventHandler;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.auth.providers.TwitchIdentityProvider;
+import com.github.twitch4j.events.ChannelGoLiveEvent;
 import com.github.twitch4j.helix.domain.User;
 import com.github.twitch4j.helix.domain.UserList;
 import com.github.twitch4j.pubsub.events.*;
@@ -54,6 +55,8 @@ public class Bot {
         }
 
         if (channel != null) {
+            twitchClient.getClientHelper().enableStreamEventListener(configReader.getChannelName());
+
             twitchClient.getPubSub().listenForCheerEvents(credential, channel.getId());
             twitchClient.getPubSub().listenForFollowingEvents(credential, channel.getId());
             twitchClient.getPubSub().listenForSubscriptionEvents(credential, channel.getId());
@@ -65,12 +68,16 @@ public class Bot {
             Follow follow = new Follow(twitchunt);
             Subscribe subscribe = new Subscribe(twitchunt);
             ChannelPointsRedemption channelPointsRedemption = new ChannelPointsRedemption(twitchunt);
+            StartStreaming startStreaming = new StartStreaming(twitchunt);
 
             twitchClient.getEventManager().onEvent(PollsEvent.class, poll::onPoll);
             twitchClient.getEventManager().onEvent(ChannelBitsEvent.class, cheer::onCheer);
             twitchClient.getEventManager().onEvent(FollowingEvent.class, follow::onFollow);
             twitchClient.getEventManager().onEvent(ChannelSubscribeEvent.class, subscribe::onSubscribe);
             twitchClient.getEventManager().onEvent(RewardRedeemedEvent.class, channelPointsRedemption::onPointsRedemption);
+            twitchClient.getEventManager().onEvent(ChannelGoLiveEvent.class, startStreaming::onStartStreaming);
+
+
         } else {
             twitchunt.getDependencyResolver().errorLogToConsole("twitchChannelIDError");
         }

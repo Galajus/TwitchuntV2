@@ -1,4 +1,4 @@
-#IN BETA, USE WITH CAUTION
+#NOT READY YET...
 Enabled: false
 StreamElementsAccount: "accountId"
 JWT: "ChannelJWT"

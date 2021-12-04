@@ -18,6 +18,7 @@ pollResultMinecraftBroadcast: "§aWon option: §b%arg1% §aPoints: §b%arg2%"
 pollResultTwitchChat: "[TWITCHUNT] Won option: %arg1% Points: %arg2%"
 pollResultTitle: "§d%arg1%"
 pollResultSubTitle: "§5Votes: %arg1%"
+channelGoesLive: "§6%arg1% §dStarted a stream on Twitch! Game: §6%arg2%, §dTitle: §6%arg3%"
 
 paidEffectSubtitle: "§dEffect: §b%arg1%"
 pointsRedemptionAlertTitle: "§6%arg1% §dclaimed reward"

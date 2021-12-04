@@ -35,6 +35,7 @@ public class Clock {
             if (secondOfMinute != rightNow.get(Calendar.SECOND)) {
                 secondOfMinute = rightNow.get(Calendar.SECOND);
 
+                twitchunt.getEventsController().tick();
                 twitchunt.getPollCreator().tick();
             }
 

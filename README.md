@@ -1,6 +1,6 @@
 # TwitchuntV2
 Manhunt with your viewers, second version of plugin with totaly rewrited code.
-This version have breaking changes with code quality of code and have some very interesting features not obtainable in 1.x version. For example: subscription effects, donation effects, cheer effects.
+This version have breaking changes with code quality and have some very interesting features not obtainable in 1.x version. For example: subscription effects, donation effects, cheer effects.
 
 Project is for my JAVA and Git lerning and anybody who have any helpfull tips for me can use issues or my discord: dc.galajus.pl
 

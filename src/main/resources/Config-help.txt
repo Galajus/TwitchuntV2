@@ -49,8 +49,6 @@ showResultTitleToHuntedPlayers: true
 showInfoOnTwitchAboutStartedPoll: true
 broadcastStartStreamOnMinecraft: true
 
-#ALL BELLOW IS IN BETA
-
 #Add to your twitch account some channel points rewards and assign name of reward to effect id
 twitchRedemptions:
   ExampleRewardName1: 12

@@ -50,8 +50,6 @@ showResultTitleToHuntedPlayers: true
 showInfoOnTwitchAboutStartedPoll: true
 broadcastStartStreamOnMinecraft: true
 
-#ALL BELLOW IS IN BETA
-
 #Add to your twitch account some channel points rewards and assign name of reward to effect id
 #Finalize reward on your twitch channel dashboard must be made handy (refund points if reward is purchased but twitchunt not enabled etc.)
 twitchRedemptions:

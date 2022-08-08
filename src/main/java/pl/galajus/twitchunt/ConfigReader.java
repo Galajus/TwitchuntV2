@@ -9,6 +9,7 @@ import pl.galajus.twitchunt.ObjectsManager.PluginPollChoice;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -202,7 +203,7 @@ public class ConfigReader {
         if (!this.getHuntedPlayersAsStrings().contains(hunted)) {
             huntedPlayers.add(hunted);
             mainConfig.set("huntedPlayers", huntedPlayers);
-            mainConfig.options().header("Config instructions in file: Config-help.txt");
+            mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
             twitchunt.saveConfig();
             twitchunt.getEffectController().getEffectCaster().updateHunters();
 
@@ -220,7 +221,7 @@ public class ConfigReader {
         List<String> huntedPlayers = getHuntedPlayersAsStrings();
         huntedPlayers.remove(hunted);
         mainConfig.set("huntedPlayers", huntedPlayers);
-        mainConfig.options().header("Config instructions in file: Config-help.txt");
+        mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
         twitchunt.saveConfig();
         twitchunt.getEffectController().getEffectCaster().updateHunters();
 
@@ -233,31 +234,31 @@ public class ConfigReader {
 
     public void setPollDuration(long duration) {
         mainConfig.set("pollDuration", duration);
-        mainConfig.options().header("Config instructions in file: Config-help.txt");
+        mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
         twitchunt.saveConfig();
     }
 
     public void setPollInterval(long interval) {
         mainConfig.set("pollInterval", interval);
-        mainConfig.options().header("Config instructions in file: Config-help.txt");
+        mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
         twitchunt.saveConfig();
     }
 
     public void setOptionsPerPoll(int amountOfOptions) {
         mainConfig.set("optionsPerPoll", amountOfOptions);
-        mainConfig.options().header("Config instructions in file: Config-help.txt");
+        mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
         twitchunt.saveConfig();
     }
 
     public void setTwitchMessages(boolean showMessagesFromTwitch) {
         mainConfig.set("optionsPerPoll", showMessagesFromTwitch);
-        mainConfig.options().header("Config instructions in file: Config-help.txt");
+        mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
         twitchunt.saveConfig();
     }
 
     public void setPollInstaStart(boolean instaStart) {
         mainConfig.set("pollInstaStart", instaStart);
-        mainConfig.options().header("Config instructions in file: Config-help.txt");
+        mainConfig.options().setHeader(Collections.singletonList("Config instructions in file: Config-help.txt"));
         twitchunt.saveConfig();
     }
 

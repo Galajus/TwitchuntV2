@@ -63,6 +63,7 @@ public final class Twitchunt extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        bot.getTwitchClient().close();
     }
 
     public Bot getBot() {

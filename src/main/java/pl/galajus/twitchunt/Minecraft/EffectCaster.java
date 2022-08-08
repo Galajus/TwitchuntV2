@@ -315,6 +315,9 @@ public class EffectCaster {
             for (ItemStack itemStack : hunted.getInventory()) {
                 if (itemStack != null) huntedItems.add(itemStack);
             }
+            if (huntedItems.isEmpty()) {
+                return;
+            }
             int rand = new Random().nextInt(huntedItems.size());
             hunted.getInventory().removeItem(huntedItems.get(rand));
         }

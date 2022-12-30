@@ -42,7 +42,7 @@ public class Bot {
                 .withEnablePubSub(true)
                 .withChatAccount(credential)
                 .withEnableChat(true)
-                .withDefaultEventHandler(SimpleEventHandler.class)
+                .withDefaultEventHandler(ReactorEventHandler.class)
                 .build();
 
         ReactorEventHandler reactorEventHandler = twitchClient.getEventManager().getEventHandler(ReactorEventHandler.class);

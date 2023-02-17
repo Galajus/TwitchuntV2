@@ -21,7 +21,7 @@ public class ConfigReader {
     private FileConfiguration effectsConfig;
     private FileConfiguration customEffectsConfig;
 
-    Integer MAX_LORE_LENGTH = 25;
+    private static final Integer MAX_LORE_LENGTH = 25;
 
     public ConfigReader(Twitchunt twitchunt) {
         this.twitchunt = twitchunt;

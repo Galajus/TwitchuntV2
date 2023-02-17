@@ -5,7 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import pl.galajus.twitchunt.ObjectsManager.PluginPollChoice;
+import pl.galajus.twitchunt.objectsmanager.PluginPollChoice;
 
 import java.io.File;
 import java.util.ArrayList;

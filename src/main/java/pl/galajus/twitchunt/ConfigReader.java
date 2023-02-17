@@ -21,6 +21,8 @@ public class ConfigReader {
     private FileConfiguration effectsConfig;
     private FileConfiguration customEffectsConfig;
 
+    Integer MAX_LORE_LENGTH = 25;
+
     public ConfigReader(Twitchunt twitchunt) {
         this.twitchunt = twitchunt;
 
@@ -45,7 +47,7 @@ public class ConfigReader {
         try {
             mainConfig.load(fDefault);
         } catch (Exception ex) {
-            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().errorLogToConsole("configLoadError"),1);
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().errorLogToConsole("configLoadError"), 1);
 
         }
         twitchunt.saveDefaultConfig();
@@ -101,7 +103,9 @@ public class ConfigReader {
         List<Player> huntedPlayers = new ArrayList<>();
         for (String stringPlayer : stringPlayers) {
             Player p = Bukkit.getPlayerExact(stringPlayer);
-            if (p != null) huntedPlayers.add(p);
+            if (p != null) {
+                huntedPlayers.add(p);
+            }
         }
         return huntedPlayers;
     }
@@ -264,12 +268,12 @@ public class ConfigReader {
 
     private void validateConfig() {
         if (this.getPollDuration() < 20) {
-            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().warningLogToConsole("configPollDurationInvalid"),1);
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().warningLogToConsole("configPollDurationInvalid"), 1);
             this.setPollDuration(30);
         }
 
         if (this.getPollInterval() < (this.getPollDuration() + 4)) {
-            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().warningLogToConsole("configPollIntervalInvalid"),1);
+            Bukkit.getScheduler().runTaskLater(twitchunt, () -> twitchunt.getDependencyResolver().warningLogToConsole("configPollIntervalInvalid"), 1);
             this.setPollInterval(this.getPollDuration() + 10L);
         }
 
@@ -289,28 +293,28 @@ public class ConfigReader {
         ConfigurationSection configEffectList = effectsConfig.getConfigurationSection("effects");
         if (configEffectList != null) {
             for (Map.Entry<String, Object> entry : configEffectList.getValues(false).entrySet()) {
+                // Set default as -1 if the configuration section is not found
+                int id = effectsConfig.getInt("effects." + entry.getKey() + ".id", -1);
 
-
-                int id = effectsConfig.getInt("effects." + entry.getKey() + ".id");
-                String lore = effectsConfig.getString("effects." + entry.getKey() + ".lore");
-                if (lore == null) {
-                    lore = "[empty lore]";
-                }
-                if (lore.length() > 25) {
-                    Bukkit.getScheduler().runTaskLater(twitchunt, () -> {
-                        twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
-                        twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
-                        Bukkit.getPluginManager().disablePlugin(twitchunt);
-                    },1);
-
-                    return;
-                }
-                if (effectsConfig.getBoolean("effects." + entry.getKey() + ".enabled")) {
-                    new PluginPollChoice(id, lore, true);
-                } else {
-                    new PluginPollChoice(id, lore, false);
+                // If the id equals -1
+                if (id < 0) {
+                    // Message: An effect in the effects.yml is missing an id, this effect will be disabled
+                    continue;
                 }
 
+                // Default can be passed as argument
+                String lore = effectsConfig.getString("effects." + entry.getKey() + ".lore", "[empty lore]");
+
+                // "Bad Practice" to disable the plugin whenever something is not correct.
+                // "Good Practice" send error to the console, change the outcome
+                // This could be to shorten the lore or to not include the effect
+                if (lore.length() > MAX_LORE_LENGTH) {
+                    twitchunt.getDependencyResolver().errorLogToConsole("LoreTooLong", lore);
+                    lore = lore.substring(0, MAX_LORE_LENGTH);
+                }
+
+                // No need to check the boolean if you can pass it as argument
+                new PluginPollChoice(id, lore, effectsConfig.getBoolean("effects." + entry.getKey() + ".enabled", true));
             }
         }
         this.loadCustomEffects();
@@ -337,7 +341,7 @@ public class ConfigReader {
                         twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore1");
                         twitchunt.getDependencyResolver().errorLogToConsole("tooLongLore2");
                         Bukkit.getPluginManager().disablePlugin(twitchunt);
-                    },1);
+                    }, 1);
                     return;
                 }
                 if (customEffectsConfig.getBoolean("effects." + entry.getKey() + ".enabled")) {

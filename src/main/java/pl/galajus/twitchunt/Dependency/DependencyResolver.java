@@ -229,14 +229,8 @@ public class DependencyResolver {
     }
 
     private String convertArgs(String translatedText, String... args) {
-
-        int loopNO = 1;
-        String template = "%arg";
-
-        for (String arg : args) {
-            String replace = template + loopNO + "%";
-            translatedText = translatedText.replaceAll(replace, arg);
-            loopNO++;
+        for (int loopNO = 1; loopNO <= args.length; loopNO++) {
+            translatedText = translatedText.replaceAll("%arg" + loopNO + "%", args[loopNO]);
         }
         return translatedText;
     }

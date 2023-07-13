@@ -16,7 +16,6 @@ import java.util.Map;
 public class ConfigReader {
 
     private final Twitchunt twitchunt;
-
     private FileConfiguration mainConfig;
     private FileConfiguration effectsConfig;
     private FileConfiguration customEffectsConfig;

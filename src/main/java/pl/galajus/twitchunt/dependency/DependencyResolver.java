@@ -230,7 +230,7 @@ public class DependencyResolver {
 
     private String convertArgs(String translatedText, String... args) {
         for (int loopNO = 1; loopNO <= args.length; loopNO++) {
-            translatedText = translatedText.replaceAll("%arg" + loopNO + "%", args[loopNO]);
+            translatedText = translatedText.replaceAll("%arg" + loopNO + "%", args[loopNO - 1]);
         }
         return translatedText;
     }

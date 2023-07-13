@@ -15,9 +15,7 @@ public final class Twitchunt extends JavaPlugin {
 
     private Bot bot;
     private String prefix;
-
     private Manager manager;
-
     private Translations translations;
     private CommandsHelper commandsHelper;
     private DependencyResolver dependencyResolver;
